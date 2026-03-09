@@ -54,6 +54,23 @@ vim.keymap.set(
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move line down' })
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move line up' })
 
+-- DnD vault
+local dnd = require 'config.dnd'
+
+vim.keymap.set('n', '<leader>dw', dnd.switch_to_vault, { desc = '[D]nD switch to vault' })
+vim.keymap.set('n', '<leader>df', dnd.find_files, { desc = '[D]nD [F]ind file' })
+vim.keymap.set('n', '<leader>dg', dnd.grep, { desc = '[D]nD [G]rep' })
+
+vim.keymap.set('n', '<leader>dH', dnd.open 'house-rules.md', { desc = '[D]nD [H]ouse rules' })
+vim.keymap.set('n', '<leader>drc', dnd.open 'rules-and-tables/combat.md', { desc = '[D]nD [R]ules: [C]ombat' })
+vim.keymap.set('n', '<leader>drs', dnd.open 'rules-and-tables/spells.md', { desc = '[D]nD [R]ules: [S]pells' })
+vim.keymap.set('n', '<leader>drk', dnd.open 'rules-and-tables/skills.md', { desc = '[D]nD [R]ules: s[K]ills' })
+vim.keymap.set('n', '<leader>dC', dnd.open 'campaign-notes/current.md', { desc = '[D]nD [C]urrent session' })
+
+vim.keymap.set('n', '<leader>dnc', dnd.new_note 'campaign-notes', { desc = '[D]nD [N]ew [C]ampaign note' })
+vim.keymap.set('n', '<leader>dnp', dnd.new_note 'characters', { desc = '[D]nD [N]ew [P]layer character' })
+vim.keymap.set('n', '<leader>dnn', dnd.new_note 'npcs', { desc = '[D]nD [N]ew [N]PC' })
+
 -- Go to my work directory
 vim.keymap.set('n', '<leader>ww', function()
   vim.cmd 'tcd C:/Users/chris.wheeler/OneDrive - Danaher/1. WORK'

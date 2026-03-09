@@ -94,10 +94,8 @@ require 'config.keymaps'
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
 
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -114,7 +112,6 @@ vim.diagnostic.config {
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
   jump = { float = true },
 }
-
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -200,7 +197,68 @@ require('lazy').setup({
   --
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
-
+  { -- Renders markdown beautifully in-buffer
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'markdown' },
+    opts = {
+      render_modes = { 'n', 'c' },
+      heading = { enabled = true },
+      code = { enabled = true },
+      bullet = { enabled = true },
+      checkbox = { enabled = true },
+      sign = { enabled = false },
+      -- Keep line numbers visible
+      anti_conceal = { enabled = true },
+    },
+  },
+  {
+    'yousefhadder/markdown-plus.nvim',
+    ft = 'markdown',
+    opts = {
+      -- Configuration options (all optional)
+      enabled = true,
+      features = {
+        list_management = true, -- List management features
+        text_formatting = true, -- Text formatting features
+        thematic_break = true, -- Thematic break insert/cycle
+        headers_toc = true, -- Headers + TOC features
+        links = true, -- Link management features
+        images = true, -- Image link management features
+        quotes = true, -- Blockquote toggling feature
+        callouts = true, -- GFM callouts/admonitions feature
+        code_block = true, -- Fenced code block workflows
+        html_block_awareness = true, -- Skip operations inside HTML blocks
+        table = true, -- Table support features
+        footnotes = true, -- Footnotes management features
+      },
+      footnotes = { -- Footnotes configuration
+        section_header = 'Footnotes', -- Header for footnotes section
+        confirm_delete = true, -- Confirm before deleting footnotes
+      },
+      keymaps = {
+        enabled = true, -- Enable default keymaps (<Plug> available for custom)
+      },
+      toc = { -- TOC window configuration
+        initial_depth = 2,
+      },
+      callouts = { -- Callouts configuration
+        default_type = 'NOTE',
+        custom_types = {}, -- Add custom types like { "DANGER", "SUCCESS" }
+      },
+      table = { -- Table sub-configuration
+        auto_format = true,
+        default_alignment = 'left',
+        confirm_destructive = true, -- Confirm before transpose/sort operations
+        keymaps = {
+          enabled = true,
+          prefix = '<localleader>t',
+          insert_mode_navigation = true, -- Alt+hjkl cell navigation
+        },
+      },
+      filetypes = { 'markdown' }, -- Filetypes to enable the plugin for
+    },
+  },
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter',
@@ -303,7 +361,7 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-     
+
       -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
       -- it is better explained there). This allows easily switching between pickers if you prefer using something else!
       vim.api.nvim_create_autocmd('LspAttach', {
